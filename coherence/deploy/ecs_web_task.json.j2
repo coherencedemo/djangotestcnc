@@ -41,9 +41,9 @@
                 }
             },
             "linuxParameters": {
-                "initProcessEnabled": true  // Enables init process in the container
+                "initProcessEnabled": true  
             },
-            "enableExecuteCommand": true,  // Enables ECS Exec for the container
+            "enableExecuteCommand": true,  
             "secrets": [
                 {% for item in service.environment_secrets %}
                 {
