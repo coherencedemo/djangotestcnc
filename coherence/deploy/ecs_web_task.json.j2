@@ -33,7 +33,7 @@
             ],
             {% endif %}
             "logConfiguration": {
-                "logDriver": "awslogs",
+                "logDriver": "awsfirelens",
                 "options": {
                     "awslogs-group": "{{ service.instance_name }}",
                     "awslogs-region": "{{ environment.collection.region }}",
