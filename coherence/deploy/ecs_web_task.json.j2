@@ -56,11 +56,11 @@
                 {
                     "name": "PORT",
                     "value": "8080"
-                }{% if service.environment_variables %},{% endif %},
+                }{% if service.environment_variables %},{% endif %}
                 {% for item in service.insecure_environment_items %}
                 {
                     "name": "{{ item.name }}",
-                    "value": "{{ item.value | tojson }}"
+                    "value": {{ item.value | tojson }}
                 }{% if not loop.last %},{% endif %}
                 {% endfor %}
             ]
