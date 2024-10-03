@@ -17,27 +17,19 @@
                     "softLimit": 65535
                 }
             ],
-            {% if command %}
-            "entryPoint": ["sh"],
-            "command": [
-                "-c",
-                "{{ command }}"
-            ],
-            {% endif %}
-            {% if expose_ports %}
             "portMappings": [
                 {
                     "containerPort": 8080,
                     "hostPort": 8080
                 }
             ],
-            {% endif %}
             "logConfiguration": {
                 "logDriver": "awsfirelens",
                 "options": {
-                    "awslogs-group": "{{ service.instance_name }}",
-                    "awslogs-region": "{{ environment.collection.region }}",
-                    "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}"
+                    "Name": "cloudwatch",
+                    "region": "{{ environment.collection.region }}",
+                    "log_group_name": "{{ service.instance_name }}",
+                    "log_stream_prefix": "{{ service.log_stream_prefix('web') }}"
                 }
             },
             "linuxParameters": {
@@ -70,6 +62,14 @@
             "firelensConfiguration": {
                 "type": "fluentbit",
                 "options": { "enable-ecs-log-metadata": "true" }
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "{{ service.instance_name }}-firelens",
+                    "awslogs-region": "{{ environment.collection.region }}",
+                    "awslogs-stream-prefix": "firelens"
+                }
             }
         }
     ]
