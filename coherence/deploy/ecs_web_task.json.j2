@@ -1,4 +1,4 @@
-  {
+{
     "family": "{{ task_name }}",
     "cpu": "{{ service.deploy.resources.limits.cpu }}",
     "memory": "{{ service.deploy.resources.limits.memory }}",
@@ -33,22 +33,13 @@
             ],
             {% endif %}
             "logConfiguration": {
-                "logDriver": "awsfirelens",
+                "logDriver": "awslogs",
                 "options": {
-                    "Name": "cloudwatch",
                     "awslogs-group": "{{ service.instance_name }}",
                     "awslogs-region": "{{ environment.collection.region }}",
-                    "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}",
-                    "auto_create_group": "true"
+                    "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}"
                 }
             },
-            "firelensConfiguration": {
-                "type": "fluentbit",
-                "options": { "enable-ecs-log-metadata": "true" }
-            },
-            "linuxParameters": {
-                "initProcessEnabled": true 
-            }, 
             "secrets": [
                 {% for item in service.environment_secrets %}
                 {
@@ -71,4 +62,4 @@
             ]
         }
     ]
-  }
+}
