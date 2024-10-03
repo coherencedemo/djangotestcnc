@@ -1,4 +1,4 @@
-{
+  {
     "family": "{{ task_name }}",
     "cpu": "{{ service.deploy.resources.limits.cpu }}",
     "memory": "{{ service.deploy.resources.limits.memory }}",
@@ -40,6 +40,10 @@
                     "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}"
                 }
             },
+            "linuxParameters": {
+                "initProcessEnabled": true 
+            },
+            "enableExecuteCommand": true,  
             "secrets": [
                 {% for item in service.environment_secrets %}
                 {
@@ -60,6 +64,14 @@
                 }{% if not loop.last %},{% endif %}
                 {% endfor %}
             ]
+        },
+        {
+            "name": "log_router",
+            "image": "amazon/aws-for-fluent-bit:stable",
+            "firelensConfiguration": {
+                "type": "fluentbit",
+                "options": { "enable-ecs-log-metadata": "true" }
+            }
         }
     ]
-}
+  }
