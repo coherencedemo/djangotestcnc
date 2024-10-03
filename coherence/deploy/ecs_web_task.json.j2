@@ -6,6 +6,7 @@
     "networkMode": "awsvpc",
     "taskRoleArn": "{{ environment.collection.task_execution_role_arn }}",
     "executionRoleArn": "{{ environment.collection.task_execution_role_arn }}",
+    "enableExecuteCommand": true, 
     "containerDefinitions": [
         {
             "name": "{{ service.instance_name }}",
@@ -42,8 +43,7 @@
             },
             "linuxParameters": {
                 "initProcessEnabled": true 
-            },
-            "enableExecuteCommand": true,  
+            }, 
             "secrets": [
                 {% for item in service.environment_secrets %}
                 {
