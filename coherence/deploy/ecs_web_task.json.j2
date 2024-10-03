@@ -33,12 +33,18 @@
             ],
             {% endif %}
             "logConfiguration": {
-                "logDriver": "awslogs",
+                "logDriver": "awsfirelens",
                 "options": {
+                    "Name": "cloudwatch",
                     "awslogs-group": "{{ service.instance_name }}",
                     "awslogs-region": "{{ environment.collection.region }}",
-                    "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}"
+                    "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}",
+                    "auto_create_group": "true"
                 }
+            },
+            "firelensConfiguration": {
+                "type": "fluentbit",
+                "options": { "enable-ecs-log-metadata": "true" }
             },
             "linuxParameters": {
                 "initProcessEnabled": true 
@@ -63,14 +69,6 @@
                 }{% if not loop.last %},{% endif %}
                 {% endfor %}
             ]
-        },
-        {
-            "name": "log_router",
-            "image": "amazon/aws-for-fluent-bit:stable",
-            "firelensConfiguration": {
-                "type": "fluentbit",
-                "options": { "enable-ecs-log-metadata": "true" }
-            }
         }
     ]
   }
