@@ -10,11 +10,19 @@
         {
             "name": "{{ service.instance_name }}",
             "image": "{{ service.image_for_tag(deployer.tag_for_service(service.name) or 'latest') }}",
-            "ulimits": [
+            "essential": true,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "{{ service.instance_name }}",
+                    "awslogs-region": "{{ environment.collection.region }}",
+                    "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}"
+                }
+            },
+            "environment": [
                 {
-                    "name": "nofile",
-                    "hardLimit": 65535,
-                    "softLimit": 65535
+                    "name": "PORT",
+                    "value": "8080"
                 }
             ],
             {% if command %}
@@ -28,35 +36,16 @@
             "portMappings": [
                 {
                     "containerPort": 8080,
-                    "hostPort": 8080
+                    "hostPort": 8080,
+                    "protocol": "tcp"
                 }
             ],
             {% endif %}
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-group": "{{ service.instance_name }}",
-                    "awslogs-region": "{{ environment.collection.region }}",
-                    "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}"
-                }
-            },
             "secrets": [
                 {% for item in service.environment_secrets %}
                 {
                     "name": "{{ item.name }}",
                     "valueFrom": "arn:aws:secretsmanager:{{ environment.collection.region }}:{{ environment.collection.account_id }}:secret:{{ item.secret_id }}"
-                }{% if not loop.last %},{% endif %}
-                {% endfor %}
-            ],
-            "environment": [
-                {
-                    "name": "PORT",
-                    "value": "8080"
-                }{% if service.environment_variables %},{% endif %}
-                {% for item in service.insecure_environment_items %}
-                {
-                    "name": "{{ item.name }}",
-                    "value": {{ item.value | tojson }}
                 }{% if not loop.last %},{% endif %}
                 {% endfor %}
             ]
