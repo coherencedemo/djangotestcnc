@@ -14,9 +14,7 @@ def index(request):
 
 	employees = Employee.objects.all()
 	return render(request, 'index.html', {'form': form, 'employees': employees})
-
-def health_check(request):
-    return HttpResponse("OK", status=200)
+	
 
 def employee_edit(request, pk):
 	employee = get_object_or_404(Employee, pk=pk)
