@@ -1,4 +1,4 @@
-  {
+{
     "family": "{{ task_name }}",
     "cpu": "{{ service.deploy.resources.limits.cpu }}",
     "memory": "{{ service.deploy.resources.limits.memory }}",
@@ -33,7 +33,7 @@
             ],
             {% endif %}
             "logConfiguration": {
-                "logDriver": "awslogs",
+                "logDriver": "awsfirelens",
                 "options": {
                     "awslogs-group": "{{ service.instance_name }}",
                     "awslogs-region": "{{ environment.collection.region }}",
@@ -41,9 +41,8 @@
                 }
             },
             "linuxParameters": {
-                "initProcessEnabled": true  // Enables init process in the container
+                "initProcessEnabled": true  
             },
-            "enableExecuteCommand": true,  // Enables ECS Exec for the container
             "secrets": [
                 {% for item in service.environment_secrets %}
                 {
@@ -74,4 +73,4 @@
             }
         }
     ]
-  }
+}
