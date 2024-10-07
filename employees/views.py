@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Employee
 from .forms import EmployeeForm
+from django.http import JsonResponse
 
 
 def index(request):
@@ -14,7 +15,10 @@ def index(request):
 
 	employees = Employee.objects.all()
 	return render(request, 'index.html', {'form': form, 'employees': employees})
-	
+
+def health_check(request):
+    """Health check endpoint."""
+    return JsonResponse({'status': 'healthy'})
 
 def employee_edit(request, pk):
 	employee = get_object_or_404(Employee, pk=pk)
