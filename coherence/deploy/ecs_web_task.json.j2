@@ -40,7 +40,6 @@
                     "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}"
                 }
             },
-            "enableExecuteCommand": true,
             "secrets": [
                 {% for item in service.environment_secrets %}
                 {
