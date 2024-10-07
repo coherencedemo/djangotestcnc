@@ -33,15 +33,12 @@
             ],
             {% endif %}
             "logConfiguration": {
-                "logDriver": "awsfirelens",
+                "logDriver": "awslogs",
                 "options": {
                     "awslogs-group": "{{ service.instance_name }}",
                     "awslogs-region": "{{ environment.collection.region }}",
                     "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}"
                 }
-            },
-            "linuxParameters": {
-                "initProcessEnabled": true  
             },
             "secrets": [
                 {% for item in service.environment_secrets %}
@@ -63,14 +60,6 @@
                 }{% if not loop.last %},{% endif %}
                 {% endfor %}
             ]
-        },
-        {
-            "name": "log_router",
-            "image": "amazon/aws-for-fluent-bit:stable",
-            "firelensConfiguration": {
-                "type": "fluentbit",
-                "options": { "enable-ecs-log-metadata": "true" }
-            }
         }
     ]
 }
