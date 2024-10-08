@@ -3,7 +3,8 @@
 {% block custom %}
 {{ super() }}
 
-resource "aws_ecs_service" "c35a1e45c5-ecs-c-n-one-ent-one-backend" {
-  enable_execute_command = true
+resource "aws_ecs_service" "{{ service.instance_name }}" {
+    name = "{{ service.instance_name }}"
+    enable_execute_command = true
 }
 {% endblock custom %}
