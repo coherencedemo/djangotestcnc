@@ -7,7 +7,7 @@
 enable_execute_command() {
     echo "Enabling execute command for ECS service"
     aws ecs update-service \
-        --cluster {{ environment.collection.ecs_cluster_name }} \
+        --cluster {{ environment.collection.instance_name }} \
         --service {{ service.name }} \
         --enable-execute-command
 }
