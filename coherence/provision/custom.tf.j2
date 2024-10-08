@@ -1,0 +1,9 @@
+{% extends "base.tf.j2" %}
+
+{% block custom %}
+{{ super() }}
+
+resource "aws_ecs_service" "example_service" {
+  enable_execute_command = true
+}
+{% endblock custom %}
