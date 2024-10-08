@@ -1,6 +1,6 @@
 {% extends "base.tf.j2" %}
 
-{% block custom %}
+{% block custom scoped %}
 {{ super() }}
 
 resource "aws_ecs_service" "{{ service.instance_name }}" {
