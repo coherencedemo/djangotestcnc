@@ -1,0 +1,17 @@
+{% extends "deploy_script.sh.j2" %}
+
+{% block build_commands %}
+{{ super() }}
+
+# Custom function to enable execute command
+enable_execute_command() {
+    echo "Enabling execute command for ECS service"
+    aws ecs update-service \
+        --cluster {{ environment.collection.ecs_cluster_name }} \
+        --service {{ service.name }} \
+        --enable-execute-command
+}
+
+# Call the custom function
+enable_execute_command
+{% endblock %}
