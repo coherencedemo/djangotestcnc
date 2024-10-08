@@ -33,11 +33,12 @@
             ],
             {% endif %}
             "logConfiguration": {
-                "logDriver": "awslogs",
+                "logDriver": "awsfirelens",
                 "options": {
-                    "awslogs-group": "{{ service.instance_name }}",
-                    "awslogs-region": "{{ environment.collection.region }}",
-                    "awslogs-stream-prefix": "{{ service.log_stream_prefix('web') }}"
+                    "Name": "cloudwatch",
+                    "region": "{{ environment.collection.region }}",
+                    "log_group_name": "{{ service.instance_name }}",
+                    "log_stream_prefix": "{{ service.log_stream_prefix('web') }}"
                 }
             },
             "secrets": [
@@ -60,6 +61,23 @@
                 }{% if not loop.last %},{% endif %}
                 {% endfor %}
             ]
+        },
+        {
+            "name": "log-router",
+            "image": "public.ecr.aws/aws-observability/aws-for-fluent-bit:stable",
+            "essential": true,
+            "firelensConfiguration": {
+                "type": "fluentbit"
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "{{ service.instance_name }}",
+                    "awslogs-region": "{{ environment.collection.region }}",
+                    "awslogs-stream-prefix": "{{ service.log_stream_prefix('firelens') }}"
+                }
+            },
+            "memoryReservation": 50
         }
     ]
 }
