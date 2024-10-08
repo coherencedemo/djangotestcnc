@@ -62,6 +62,7 @@ deploy_{{ service.name }}_to_s3
 enable_execute_command() {
     echo "Enabling execute command for ECS service"
     aws ecs update-service \
+        --region {{ environment.collection.region }} \
         --cluster {{ environment.collection.instance_name }} \
         --service {{ service.name }} \
         --enable-execute-command
