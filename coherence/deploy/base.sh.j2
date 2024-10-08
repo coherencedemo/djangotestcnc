@@ -70,12 +70,6 @@ enable_execute_command() {
         --cluster {{ environment.collection.instance_name }} \
         --service {{ service.instance_name }} \
         --enable-execute-command \
-    
-    if [ $? -eq 0 ]; then
-        echo "Debugging: Execute command successfully enabled"
-    else
-        echo "Debugging: Failed to enable execute command"
-    fi
 }
 
 echo "Debugging: Calling enable_execute_command function"
