@@ -64,9 +64,9 @@ enable_execute_command() {
     echo "Debugging: Environment collection instance name: {{ environment.collection.instance_name }}"
     echo "Debugging: Service name: {{ service.name }}"
     echo "Debugging: Service name: {{ service.instance_name }}"
-    echo "Debugging: Service name: {{ service.task_name }}"
+    echo "Debugging: Service name: {{ service }}"
     echo "Debugging: Service name: {{ service.name }}"
-    
+
     
     echo "Debugging: Listing all ECS clusters"
     aws ecs list-clusters --region {{ environment.collection.region }}
