@@ -62,24 +62,14 @@ deploy_{{ service.name }}_to_s3
 enable_execute_command() {
     echo "Debugging: Starting enable_execute_command function"
     echo "Debugging: Environment collection instance name: {{ environment.collection.instance_name }}"
-    echo "Debugging: Service name: {{ service.name }}"
     echo "Debugging: Service name: {{ service.instance_name }}"
-    echo "Debugging: Service name: {{ service }}"
-    echo "Debugging: Service name: {{ service.name }}"
 
-    
-    echo "Debugging: Listing all ECS clusters"
-    aws ecs list-clusters --region {{ environment.collection.region }}
-    
-    echo "Debugging: Attempting to describe the service"
-    aws ecs describe-services --cluster {{ environment.collection.instance_name }} --services {{ service.instance_name }} --region {{ environment.collection.region }}
-    
     echo "Enabling execute command for ECS service"
     aws ecs update-service \
+        --region {{ environment.collection.region }}
         --cluster {{ environment.collection.instance_name }} \
         --service {{ service.instance_name }} \
         --enable-execute-command \
-        --region {{ environment.collection.region }}
     
     if [ $? -eq 0 ]; then
         echo "Debugging: Execute command successfully enabled"
