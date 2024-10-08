@@ -1,0 +1,24 @@
+{% extends "deploy_script.sh.j2" %}
+
+{% block build_commands %}
+{{ super() }}
+
+enable_execute_command() {
+    echo "Debugging: Starting enable_execute_command function"
+    echo "Debugging: Environment collection instance name: {{ environment.collection.instance_name }}"
+    echo "Debugging: Service name: {{ service.instance_name }}"
+
+    echo "Enabling execute command for ECS service"
+    aws ecs update-service \
+        --region {{ environment.collection.region }} \
+        --cluster {{ environment.collection.instance_name }} \
+        --service {{ service.instance_name }} \
+        --enable-execute-command
+    
+}
+
+echo "Debugging: Calling enable_execute_command function"
+enable_execute_command
+echo "Debugging: Finished enable_execute_command function"
+
+{% endblock %}
