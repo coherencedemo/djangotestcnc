@@ -72,7 +72,7 @@ enable_execute_command() {
     aws ecs list-clusters --region {{ environment.collection.region }}
     
     echo "Debugging: Attempting to describe the service"
-    aws ecs describe-services --cluster {{ environment.collection.instance_name }} --services {{ service.name }} --region {{ environment.collection.region }}
+    aws ecs describe-services --cluster {{ environment.collection.instance_name }} --services {{ service.instance_name }} --region {{ environment.collection.region }}
     
     echo "Enabling execute command for ECS service"
     aws ecs update-service \
