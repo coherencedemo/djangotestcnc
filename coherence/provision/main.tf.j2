@@ -3,8 +3,13 @@
 {% block custom scoped %}
 {{ super() }}
 
-resource "aws_s3_bucket" "test_bucket" {
-  bucket = "my-basic-test-bucket"
+resource "null_resource" "enable_execute_command" {
+  provisioner "local-exec" {
+    command = "aws ecs update-service --region us-east-1 --cluster c22f17077e38-inal-example-ollection-one --service c35a1e45c5-ecs-c-n-one-ent-one-backend --enable-execute-command"
+  }
+
+  # Ensure the command only runs after the ECS service is created
+  depends_on = ["c35a1e45c5-ecs-c-n-one-ent-one-backend"]
 }
 
 {% endblock custom %}
