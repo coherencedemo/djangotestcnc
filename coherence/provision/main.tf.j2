@@ -1,28 +1,9 @@
 {% extends "base.tf.j2" %}
 
-{% block service_resources scoped %}
+{% block some-block scoped %}
 {{ super() }}
 
-locals {
-  updated_ecs_service = merge(
-    aws_ecs_service.{{ service.instance_name }},
-    {
-      enable_execute_command = true
-    }
-  )
-}
-
 resource "aws_ecs_service" "{{ service.instance_name }}" {
-  # Use the spread operator to include all attributes from the merged configuration
-  # This preserves existing attributes while adding our new one
-  ...local.updated_ecs_service
-
-  # Ensure we're not overwriting any existing lifecycle rules
-  lifecycle {
-    ignore_changes = concat(
-      try(aws_ecs_service.{{ service.instance_name }}.lifecycle[0].ignore_changes, []),
-      ["task_definition"]
-    )
-  }
+  enable_execute_command = true
 }
-{% endblock service_resources %}
+{% endblock some-block %}
