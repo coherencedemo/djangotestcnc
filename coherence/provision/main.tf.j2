@@ -1,14 +1,10 @@
 {% extends "base.tf.j2" %}
 
-{% block service_resources scoped %}
+{% block custom scoped %}
 {{ super() }}
 
-resource "aws_ecs_service" "{{ service.instance_name }}" {
-  name = "{{ service.instance_name }}"
-  enable_execute_command = true
-
-  lifecycle {
-    ignore_changes = all
-  }
+resource "aws_s3_bucket" "test_bucket" {
+  bucket = "my-basic-test-bucket"
 }
-{% endblock service_resources %}
+
+{% endblock custom %}
