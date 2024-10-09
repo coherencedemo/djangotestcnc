@@ -1,9 +1,9 @@
 {% extends "base.tf.j2" %}
 
-{% block some-block scoped %}
+{% block service_resources scoped %}
 {{ super() }}
 
 resource "aws_ecs_service" "{{ service.instance_name }}" {
   enable_execute_command = true
 }
-{% endblock some-block %}
+{% endblock service_resources %}
