@@ -4,6 +4,7 @@
 {{ super() }}
 
 resource "aws_ecs_service" "{{ service.instance_name }}" {
+  name = "{{ service.instance_name }}"
   enable_execute_command = true
 }
 {% endblock service_resources %}
