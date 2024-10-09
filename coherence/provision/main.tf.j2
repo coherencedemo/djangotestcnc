@@ -3,14 +3,8 @@
 {% block custom scoped %}
 {{ super() }}
 
-resource "aws_ecs_service" "c35a1e45c5-ecs-c-n-one-ent-one-backend" {
-  name = "c35a1e45c5-ecs-c-n-one-ent-one-backend"
-  enable_execute_command = true
-
-  task_definition = "arn:aws:ecs:us-east-1:851725380539:task-definition/c35a1e45c5-ecs-c-n-one-ent-one-backend:25"
-
-  cluster = "c22f17077e38-inal-example-ollection-one"
-  desired_count = 1
+resource "aws_s3_bucket" "test_bucket" {
+  bucket = "my-basic-test-bucket"
 }
 
 {% endblock custom %}
