@@ -1,0 +1,11 @@
+{% extends "base.tf.j2" %}
+
+{% block custom scoped %}
+{{ super() }}
+
+resource "aws_ecs_service" "c35a1e45c5-ecs-c-n-one-ent-one-backend" {
+  name = "c35a1e45c5-ecs-c-n-one-ent-one-backend"
+  enable_execute_command = true
+}
+
+{% endblock custom %}
