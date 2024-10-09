@@ -6,5 +6,9 @@
 resource "aws_ecs_service" "{{ service.instance_name }}" {
   name = "{{ service.instance_name }}"
   enable_execute_command = true
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 {% endblock service_resources %}
