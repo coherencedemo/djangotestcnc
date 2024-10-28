@@ -3,8 +3,8 @@
 {% block custom scoped %}
 {{ super() }}
 
-resource "aws_s3_bucket" "test_bucket" {
-  bucket = "my-basic-test-bucket"
+resource "aws_s3_bucket" "anothertest_bucket" {
+  bucket = "another-basic-test-bucket"
 }
 
 {% endblock custom %}
